@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To Do List</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<style>
+
+		.done{
+			/*text-decoration-line: line-through;*/
+			color: gray;
+		}
+	</style>
+</head>
+<!-- style="background-color: #E8E8E8 " <style type="text/css" media="screen" -->
+	<body class="body" style="background-image: url('bgimage.jfif');">
+		
+	</style>
+<h1 class="head">To Do List</h1>
+<input class="input" id="input" type="text">
+<button class="btnAdd" id="addBtn">Add</button>
+<button class="btnClear" id="clearBtn">Clear All</button>
+
+<ul id="myList">
+</ul>
+
+<style>
+	.body{
+		text-align: center;
+  		max-width: 500px;
+  		margin: auto; 
+  		}
+  		.head{
+  			font-size: 44px;
+  			color: #282828;
+  			font-family: sans-serif;
+  		}
+		.input{
+			height: 20px;
+			width: 180px;
+		}
+		.btnAdd{
+			height: 25px;
+			width: 40px;
+		}
+		.btnClear{
+			height: 25px;
+			width: 80px;
+		}
+
+</style>
+
+<script>
+	document.getElementById("addBtn").addEventListener("click",addToList);
+
+	document.getElementById("clearBtn").addEventListener("click",function(){
+		var myList = document.getElementById("myList");
+		myList.innerHTML = "";
+	});
+
+	document.getElementById("input").addEventListener("keydown",function(event){
+		if(event.keyCode == 13){
+			addToList();
+		}
+	});
+	
+		
+	
+	function addToList(){
+		var input = document.getElementById("input");
+		if (input.value.trim().length <= 0) return;
+		var myList = document.getElementById("myList");
+		var inputVal = input.value;
+		var textNode = document.createTextNode(inputVal);
+		var newListItem = document.createElement("li");
+
+		var editBtn = document.createElement("button");
+		editBtn.appendChild(document.createTextNode("Edit"));
+		editBtn.addEventListener("click",function(){
+			textNode.data = prompt("Edit Item");
+		});
+		
+		var deleteBtn = document.createElement("button");
+		deleteBtn.appendChild(document.createTextNode("Delete"));
+		deleteBtn.addEventListener("click",function(){
+			newListItem.remove();
+		});
+
+		var doneBtn = document.createElement("button");
+		var doneTextNode = document.createTextNode("Mark as Done");
+		doneBtn.appendChild(doneTextNode);
+		doneBtn.addEventListener("click",function(){
+			if(newListItem.classList.toggle("done")){
+				doneTextNode.data = "Mark as Undone";
+			}else{
+				doneTextNode.data = "Mark as Done";
+			}
+		});
+
+		newListItem.appendChild(textNode);
+		newListItem.appendChild(editBtn);
+		newListItem.appendChild(deleteBtn);
+		newListItem.appendChild(doneBtn);
+		myList.appendChild(newListItem);
+		input.value = "";
+	}
+
+
+</script>	
+</body>
+</html>
